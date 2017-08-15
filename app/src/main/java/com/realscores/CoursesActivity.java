@@ -13,7 +13,7 @@ import com.realscores.service.ICourseService;
 
 public class CoursesActivity extends ActionBarActivity {
 
-    private ICourseService courseService;
+    private ICourseService courseService = new CourseService(getBaseContext());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +35,28 @@ public class CoursesActivity extends ActionBarActivity {
       //noinspection SimplifiableIfStatement
       if (id == R.id.action_settings) {
           return true;
-      } else {
-        if (id == R.id.course1) {
-          //Course course = courseService.getCourseById(1);
+      } else if (id == R.id.course1){
+        try {
+          Course course = courseService.getCourseById(1);
+          TextView txtVw = (TextView)findViewById(R.id.Course);
+          txtVw.setText(course.getCourseId() + " " + course.getName());
 
-          try {
-            Course course = new CourseService(getBaseContext()).execute(1).get();
-            TextView txtVw = (TextView)findViewById(R.id.Course);
-            txtVw.setText(course.getCourseId() + " " + course.getName());
-
-          } catch (Exception ex) {
-            Log.wtf("Other Stuff", ex.getMessage());
-            throw new RuntimeException(ex);
+        } catch (Exception ex) {
+          Log.wtf("Other Stuff", ex.getMessage());
+          throw new RuntimeException(ex);
+        }
+      } else if (id == R.id.allcourses) {
+        try {
+          Course[] courses = courseService.getAllCourses();
+          TextView txtVw = (TextView)findViewById(R.id.Course);
+          String str = "";
+          for (Course course: courses){
+            str += "\n" + course.getCourseId() + " " + course.getName();
           }
+          txtVw.setText(str);
+        } catch (Exception ex) {
+          Log.wtf("Other Stuff", ex.getMessage());
+          throw new RuntimeException(ex);
         }
       }
       return super.onOptionsItemSelected(item);

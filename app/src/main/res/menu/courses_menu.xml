@@ -14,4 +14,10 @@
         android:title="Course 1"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/allcourses"
+        android:orderInCategory="200"
+        android:title="All Courses"
+        app:showAsAction="never" />
+
 </menu>
