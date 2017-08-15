@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RealScores.iml" filepath="$PROJECT_DIR$/RealScores.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/realscoresandroid.iml" filepath="$PROJECT_DIR$/realscoresandroid.iml" />
     </modules>
   </component>
 </project>

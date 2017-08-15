@@ -19,7 +19,7 @@ public class Course implements Serializable{
   @JsonProperty("name")
   private String name;
 
-  @JsonProperty("name")
+  @JsonProperty("holes")
   private List<Hole> holes = new ArrayList<Hole>();
 
   public int getCourseId() {

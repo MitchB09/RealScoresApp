@@ -2,15 +2,23 @@ package com.realscores;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.realscores.obj.Course;
+import com.realscores.service.CourseService;
+import com.realscores.service.ICourseService;
 
 public class CoursesActivity extends ActionBarActivity {
 
+    private ICourseService courseService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.courses_activity);
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.courses_activity);
     }
 
     @Override
@@ -22,16 +30,31 @@ public class CoursesActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+      int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+      //noinspection SimplifiableIfStatement
+      if (id == R.id.action_settings) {
+          return true;
+      } else {
+        if (id == R.id.course1) {
+          //Course course = courseService.getCourseById(1);
+
+          try {
+            Course course = new CourseService(getBaseContext()).execute(1).get();
+            TextView txtVw = (TextView)findViewById(R.id.Course);
+            txtVw.setText(course.getCourseId() + " " + course.getName());
+
+          } catch (Exception ex) {
+            Log.wtf("Other Stuff", ex.getMessage());
+            throw new RuntimeException(ex);
+          }
         }
-
-        return super.onOptionsItemSelected(item);
+      }
+      return super.onOptionsItemSelected(item);
     }
+
+
+  private void setCourseText(int courseId){
+
+  }
 }
