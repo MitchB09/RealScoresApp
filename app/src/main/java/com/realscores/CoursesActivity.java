@@ -13,20 +13,39 @@ import com.realscores.service.ICourseService;
 
 public class CoursesActivity extends ActionBarActivity {
 
-    private ICourseService courseService = new CourseService(getBaseContext());
+  private ICourseService courseService = new CourseService(getBaseContext());
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
-      setContentView(R.layout.courses_activity);
-    }
+  private NavigationDrawerFragment mNavigationDrawerFragment;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.courses_menu, menu);
-        return true;
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.courses_activity);
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    // Inflate the menu; this adds items to the action bar if it is present.
+    getMenuInflater().inflate(R.menu.courses_menu, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onPrepareOptionsMenu(Menu menu) {
+    menu.clear();
+
+    try{
+      Course[] courses = courseService.getAllCourses();
+
+      for (Course course: courses){
+        menu.add(0, course.getCourseId(), course.getCourseId(), course.getName());
+      }
+    } catch (Exception ex){
+      Log.wtf("Bad Things Happended", ex);
     }
+    return super.onPrepareOptionsMenu(menu);
+  }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -35,25 +54,12 @@ public class CoursesActivity extends ActionBarActivity {
       //noinspection SimplifiableIfStatement
       if (id == R.id.action_settings) {
           return true;
-      } else if (id == R.id.course1){
+      } else {
         try {
-          Course course = courseService.getCourseById(1);
-          TextView txtVw = (TextView)findViewById(R.id.Course);
+          Course course = courseService.getCourseById(id);
+          TextView txtVw = (TextView) findViewById(R.id.Course);
           txtVw.setText(course.getCourseId() + " " + course.getName());
 
-        } catch (Exception ex) {
-          Log.wtf("Other Stuff", ex.getMessage());
-          throw new RuntimeException(ex);
-        }
-      } else if (id == R.id.allcourses) {
-        try {
-          Course[] courses = courseService.getAllCourses();
-          TextView txtVw = (TextView)findViewById(R.id.Course);
-          String str = "";
-          for (Course course: courses){
-            str += "\n" + course.getCourseId() + " " + course.getName();
-          }
-          txtVw.setText(str);
         } catch (Exception ex) {
           Log.wtf("Other Stuff", ex.getMessage());
           throw new RuntimeException(ex);
