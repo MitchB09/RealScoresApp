@@ -1,4 +1,4 @@
-package com.realscores;
+package com.realscores.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,7 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.realscores.NavDrawerFragment.NavigationDrawerCallbacks;
+import com.realscores.activity.fragments.NavDrawerFragment;
+import com.realscores.activity.fragments.NavDrawerFragment.NavigationDrawerCallbacks;
+import com.realscores.R;
 import com.realscores.obj.Course;
 import com.realscores.service.CourseService;
 import com.realscores.service.ICourseService;
