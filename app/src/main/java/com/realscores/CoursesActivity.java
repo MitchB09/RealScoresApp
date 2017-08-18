@@ -1,6 +1,5 @@
 package com.realscores;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.realscores.NavDrawerFragment.NavigationDrawerCallbacks;
 import com.realscores.obj.Course;
@@ -78,7 +76,8 @@ public class CoursesActivity extends ActionBarActivity implements NavigationDraw
       //noinspection SimplifiableIfStatement
       if (id == R.id.action_settings) {
           return true;
-      } else {
+      }
+      /*else {
         try {
           Course course = courseService.getCourseById(id);
           TextView txtVw = (TextView) findViewById(R.id.Course);
@@ -88,7 +87,7 @@ public class CoursesActivity extends ActionBarActivity implements NavigationDraw
           Log.wtf("Other Stuff", ex.getMessage());
           throw new RuntimeException(ex);
         }
-      }
+      }*/
       return super.onOptionsItemSelected(item);
     }
 
@@ -124,13 +123,6 @@ public class CoursesActivity extends ActionBarActivity implements NavigationDraw
                              Bundle savedInstanceState) {
       View rootView = inflater.inflate(R.layout.fragment_main, container, false);
       return rootView;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-      super.onAttach(activity);
-      ((CoursesActivity) activity).onSectionAttached(
-          getArguments().getInt(ARG_SECTION_NUMBER));
     }
   }
 }
