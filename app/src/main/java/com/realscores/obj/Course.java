@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mitch on 10/08/2017.
@@ -21,6 +23,9 @@ public class Course implements Serializable{
 
   @JsonProperty("holes")
   private List<Hole> holes = new ArrayList<Hole>();
+
+  public static final List<Course> ITEMS = new ArrayList<Course>();
+  public static final Map<Integer, Course> ITEM_MAP = new HashMap<Integer, Course>();
 
   public int getCourseId() {
     return course_id;
@@ -44,5 +49,10 @@ public class Course implements Serializable{
 
   public void setHoles(List<Hole> holes) {
     this.holes = holes;
+  }
+
+  private static void addItem(Course item) {
+    ITEMS.add(item);
+    ITEM_MAP.put(item.getCourseId(), item);
   }
 }

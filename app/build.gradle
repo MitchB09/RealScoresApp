@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.realscores"
@@ -22,8 +22,9 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:21.0.3'
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.0.1'
     compile 'com.android.support:support-v4:26.0.0-alpha1'
+    compile 'com.android.support:recyclerview-v7:21.0.3'
 }
