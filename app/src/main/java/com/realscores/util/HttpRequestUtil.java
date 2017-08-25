@@ -44,6 +44,7 @@ public class HttpRequestUtil {
         }
       } catch (Exception e) {
         e.printStackTrace();
+        throw e;
       }
       ObjectMapper ojbMapper = new ObjectMapper();
       return ojbMapper.readValue(stringBuilder.toString(), returnType.getClass());

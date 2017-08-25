@@ -15,10 +15,13 @@ import android.widget.Toast;
 
 import com.realscores.R;
 import com.realscores.obj.Course;
+import com.realscores.service.CourseService;
 import com.realscores.service.ICourseService;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static java.util.Collections.addAll;
 
 /**
  * A fragment representing a list of Items.
@@ -33,7 +36,6 @@ public class CourseFragment extends Fragment {
   // TODO: Customize parameters
   private int mColumnCount = 1;
   private OnListFragmentInteractionListener mListener;
-  private ICourseService courseService;
 
   /**
    * Mandatory empty constructor for the fragment manager to instantiate the
@@ -86,7 +88,11 @@ public class CourseFragment extends Fragment {
     super.onAttach(activity);
     List<Course> courseList = null;
     try {
-      courseList.addAll(Arrays.asList(courseService.getAllCourses()));
+      ICourseService courseService = new CourseService(getActivity());
+      courseList = Arrays.asList(courseService.getAllCourses());
+      for(Course course: courseList){
+        Toast.makeText(getActivity(), course.getName(), Toast.LENGTH_LONG).show();
+      }
     } catch(Exception ex) {
       Log.e("Error getting courses", ex.getMessage());
       Toast.makeText(activity.getBaseContext(), "TODO - Fix Lazy Exceptions", Toast.LENGTH_LONG).show();
