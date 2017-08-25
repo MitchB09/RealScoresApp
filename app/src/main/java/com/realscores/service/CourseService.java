@@ -6,6 +6,8 @@ import com.realscores.obj.Course;
 import com.realscores.tasks.course.GetAllCoursesTask;
 import com.realscores.tasks.course.GetCourseTask;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * Created by Mitch on 10/08/2017.
  */
@@ -17,8 +19,12 @@ public class CourseService implements ICourseService  {
     this.context = context;
   }
 
-    public Course[] getAllCourses() throws Exception{
-      return new GetAllCoursesTask().execute().get();
+    public Course[] getAllCourses(){
+      try {
+        return new GetAllCoursesTask().execute().get();
+      } catch (InterruptedException | ExecutionException e){
+        throw new RuntimeException(e);
+      }
     }
 
     public Course getCourseById(int courseId) throws Exception{

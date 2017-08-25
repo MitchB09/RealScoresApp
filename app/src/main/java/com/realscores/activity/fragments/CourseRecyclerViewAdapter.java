@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.realscores.R;
 import com.realscores.activity.fragments.CourseFragment.OnListFragmentInteractionListener;
@@ -22,7 +23,7 @@ public class CourseRecyclerViewAdapter extends RecyclerView.Adapter<CourseRecycl
   private final List<Course> mValues;
   private final CourseFragment.OnListFragmentInteractionListener mListener;
 
-  public CourseRecyclerViewAdapter(List<Course> items, OnListFragmentInteractionListener listener) {
+  CourseRecyclerViewAdapter(List<Course> items, OnListFragmentInteractionListener listener) {
     mValues = items;
     mListener = listener;
   }
@@ -37,7 +38,7 @@ public class CourseRecyclerViewAdapter extends RecyclerView.Adapter<CourseRecycl
   @Override
   public void onBindViewHolder(final ViewHolder holder, int position) {
     holder.mItem = mValues.get(position);
-    holder.mIdView.setText(mValues.get(position).getCourseId());
+    holder.mIdView.setText(String.valueOf(mValues.get(position).getCourseId()));
     holder.mContentView.setText(mValues.get(position).getName());
 
     holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +47,8 @@ public class CourseRecyclerViewAdapter extends RecyclerView.Adapter<CourseRecycl
         if (null != mListener) {
           // Notify the active callbacks interface (the activity, if the
           // fragment is attached to one) that an item has been selected.
+          Toast.makeText(holder.mContentView.getContext(), holder.mItem.getName(), Toast.LENGTH_LONG).show();
+
           mListener.onListFragmentInteraction(holder.mItem);
         }
       }
@@ -57,17 +60,17 @@ public class CourseRecyclerViewAdapter extends RecyclerView.Adapter<CourseRecycl
     return mValues.size();
   }
 
-  public class ViewHolder extends RecyclerView.ViewHolder {
-    public final View mView;
-    public final TextView mIdView;
-    public final TextView mContentView;
-    public Course mItem;
+  class ViewHolder extends RecyclerView.ViewHolder {
+    final View mView;
+    final TextView mIdView;
+    final TextView mContentView;
+    Course mItem;
 
-    public ViewHolder(View view) {
+    ViewHolder(View view) {
       super(view);
       mView = view;
-      mIdView = (TextView) view.findViewById(R.id.id);
-      mContentView = (TextView) view.findViewById(R.id.content);
+      mIdView = (TextView) view.findViewById(R.id.courseId);
+      mContentView = (TextView) view.findViewById(R.id.courseName);
     }
 
     @Override

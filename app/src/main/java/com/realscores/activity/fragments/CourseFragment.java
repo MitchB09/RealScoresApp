@@ -4,14 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.realscores.R;
 import com.realscores.obj.Course;
@@ -20,8 +20,6 @@ import com.realscores.service.ICourseService;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static java.util.Collections.addAll;
 
 /**
  * A fragment representing a list of Items.
@@ -71,13 +69,15 @@ public class CourseFragment extends Fragment {
     // Set the adapter
     if (view instanceof RecyclerView) {
       Context context = view.getContext();
+      ICourseService courseService = new CourseService(view.getContext());
+      List<Course> courseList = Arrays.asList(courseService.getAllCourses());
       RecyclerView recyclerView = (RecyclerView) view;
       if (mColumnCount <= 1) {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
       } else {
         recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
       }
-      recyclerView.setAdapter(new CourseRecyclerViewAdapter(Course.ITEMS, mListener));
+      recyclerView.setAdapter(new CourseRecyclerViewAdapter(courseList, mListener));
     }
     return view;
   }
@@ -86,19 +86,8 @@ public class CourseFragment extends Fragment {
   @Override
   public void onAttach(Activity activity) {
     super.onAttach(activity);
-    List<Course> courseList = null;
-    try {
-      ICourseService courseService = new CourseService(getActivity());
-      courseList = Arrays.asList(courseService.getAllCourses());
-      for(Course course: courseList){
-        Toast.makeText(getActivity(), course.getName(), Toast.LENGTH_LONG).show();
-      }
-    } catch(Exception ex) {
-      Log.e("Error getting courses", ex.getMessage());
-      Toast.makeText(activity.getBaseContext(), "TODO - Fix Lazy Exceptions", Toast.LENGTH_LONG).show();
-    }
+    showGlobalContextActionBar();
 
-    Toast.makeText(activity.getBaseContext(), "Attached Course Frag", Toast.LENGTH_LONG).show();
     if (activity instanceof OnListFragmentInteractionListener) {
       mListener = (OnListFragmentInteractionListener) activity;
     } else {
@@ -126,5 +115,15 @@ public class CourseFragment extends Fragment {
   public interface OnListFragmentInteractionListener {
     // TODO: Update argument type and name
     void onListFragmentInteraction(Course item);
+  }
+
+  private void showGlobalContextActionBar() {
+    ActionBar actionBar = getActionBar();
+    actionBar.setDisplayShowTitleEnabled(true);
+    actionBar.setTitle(R.string.courses);
+  }
+
+  private ActionBar getActionBar() {
+    return ((ActionBarActivity) getActivity()).getSupportActionBar();
   }
 }

@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.realscores.R;
 import com.realscores.activity.fragments.CourseFragment;
+import com.realscores.activity.fragments.NavigationDrawerFragment;
 import com.realscores.obj.Course;
 
 public class HomeActivity extends ActionBarActivity
