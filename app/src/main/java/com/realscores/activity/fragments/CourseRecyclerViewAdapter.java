@@ -1,5 +1,9 @@
 package com.realscores.activity.fragments;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +54,16 @@ public class CourseRecyclerViewAdapter extends RecyclerView.Adapter<CourseRecycl
           Toast.makeText(holder.mContentView.getContext(), holder.mItem.getName(), Toast.LENGTH_LONG).show();
 
           mListener.onListFragmentInteraction(holder.mItem);
+
+          Activity activity = (Activity) v.getContext();
+          Fragment fragment = new CourseDetailFragment();
+          Bundle bundle = new Bundle();
+          bundle.putSerializable(CourseDetailFragment.COURSE, holder.mItem);
+          fragment.setArguments(bundle);
+          FragmentManager fragmentManager =  activity.getFragmentManager();
+          fragmentManager.beginTransaction()
+              .replace(R.id.container, fragment)
+              .commit();
         }
       }
     });

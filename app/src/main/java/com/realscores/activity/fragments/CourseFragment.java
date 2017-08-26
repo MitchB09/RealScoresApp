@@ -42,7 +42,6 @@ public class CourseFragment extends Fragment {
   public CourseFragment() {
   }
 
-  // TODO: Customize parameter initialization
   @SuppressWarnings("unused")
   public static CourseFragment newInstance(int columnCount) {
     CourseFragment fragment = new CourseFragment();

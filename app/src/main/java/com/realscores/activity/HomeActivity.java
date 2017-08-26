@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.realscores.R;
 import com.realscores.activity.fragments.CourseFragment;
 import com.realscores.activity.fragments.NavigationDrawerFragment;
 import com.realscores.obj.Course;
+import com.realscores.obj.MainNavigationItemsEnum;
 
 public class HomeActivity extends ActionBarActivity
     implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -46,7 +48,19 @@ public class HomeActivity extends ActionBarActivity
   @Override
   public void onNavigationDrawerItemSelected(int position) {
     // Create a new fragment and specify the planet to show based on position
-    Fragment fragment = new CourseFragment();
+    Class fragmentClass = MainNavigationItemsEnum.getEnumByPosition(position).getFragment();
+    Fragment fragment = null;
+
+    try {
+      fragment = (Fragment)fragmentClass.getConstructor().newInstance();
+    } catch (Exception ex){
+      Log.e("No constructor found!", ex.getMessage());
+      throw new RuntimeException(ex);
+    }
+
+    if (fragment == null){
+      fragment = new CourseFragment();
+    }
 
     // Insert the fragment by replacing any existing fragment
     FragmentManager fragmentManager = getFragmentManager();
