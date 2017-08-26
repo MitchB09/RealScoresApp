@@ -20,6 +20,8 @@
 
     <string name="action_example">Example action</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Course Details -->
+    <string name="hole">Hole</string>
+    <string name="yards">Yards</string>
+    <string name="par">Par</string>
 </resources>
